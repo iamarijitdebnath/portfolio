@@ -3,19 +3,58 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 export default function Contact() {
     const { toast } = useToast();
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        toast({
-            title: "Message sent!",
-            description: "Thank you for reaching out. I'll get back to you soon.",
-        });
-        (e.target as HTMLFormElement).reset();
-    };
+    // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     toast({
+    //         title: "Message sent!",
+    //         description: "Thank you for reaching out. I'll get back to you soon.",
+    //     });
+    //     (e.target as HTMLFormElement).reset();
+    // };
+    const [loading, setLoading] = useState(false);
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+
+        const form = e.target as HTMLFormElement;
+        const data = new FormData(form);
+
+        try {
+            const res = await fetch("https://formspree.io/f/movpjavg", {
+                method: "POST",
+                body: data,
+                headers: {
+                    Accept: "application/json",
+                },
+            });
+
+            if (res.ok) {
+                toast({
+                    title: "Message sent!",
+                    description: "Thanks — I'll reply to you soon.",
+                });
+                form.reset();
+            } else {
+                toast({
+                    title: "Failed to send",
+                    description: "Please try again later.",
+                });
+            }
+        } catch (err) {
+            toast({
+                title: "Network error",
+                description: "Unable to reach the form service.",
+            });
+        } finally {
+            setLoading(false);
+        }
+    };
     return (
         <div className="space-y-12">
             <section>
@@ -57,7 +96,7 @@ export default function Contact() {
 
                     <hr className="border-border" />
 
-                    <div>
+                    {/* <div>
                         <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
                         <form onSubmit={handleSubmit} className="space-y-6">
                             <div>
@@ -97,6 +136,52 @@ export default function Contact() {
                             </div>
                             <Button type="submit" className="w-full md:w-auto">
                                 Send Message
+                            </Button>
+                        </form>
+                    </div> */}
+                    <div>
+                        <h2 className="text-2xl font-bold mb-6">Send a Message</h2>
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            <div>
+                                <label htmlFor="name" className="block text-sm font-medium mb-2">
+                                    Name
+                                </label>
+                                <Input
+                                    id="name"
+                                    name="name"
+                                    type="text"
+                                    required
+                                    className="w-full"
+                                    placeholder="Your name"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                                    Email
+                                </label>
+                                <Input
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    required
+                                    className="w-full"
+                                    placeholder="your.email@example.com"
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                                    Message
+                                </label>
+                                <Textarea
+                                    id="message"
+                                    name="message"
+                                    required
+                                    className="w-full min-h-[150px]"
+                                    placeholder="Your message..."
+                                />
+                            </div>
+                            <Button type="submit" className="w-full md:w-auto" disabled={loading}>
+                                {loading ? "Sending..." : "Send Message"}
                             </Button>
                         </form>
                     </div>
