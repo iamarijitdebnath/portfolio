@@ -29,14 +29,14 @@ export default function Contact() {
                 <div className="space-y-8">
                     <div className="flex flex-col gap-4">
                         <a
-                            href="mailto:arijit@example.com"
+                            href="mailto:arijitdebnath.dev@gmail.com"
                             className="inline-flex items-center gap-3 text-blue-400 hover:underline text-lg"
                         >
                             <Mail className="w-5 h-5" />
-                            arijit@example.com
+                            arijitdebnath.dev@gmail.com
                         </a>
                         <a
-                            href="https://github.com/arijitdebnath"
+                            href="https://github.com/iamarijitdebnath"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-3 text-blue-400 hover:underline text-lg"
@@ -45,7 +45,7 @@ export default function Contact() {
                             GitHub
                         </a>
                         <a
-                            href="https://linkedin.com/in/arijitdebnath"
+                            href="https://linkedin.com/in/iamarijitdebnath"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="inline-flex items-center gap-3 text-blue-400 hover:underline text-lg"
