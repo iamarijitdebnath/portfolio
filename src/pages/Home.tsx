@@ -6,7 +6,7 @@ export default function Home() {
         <div className="space-y-12">
             <section>
                 <h1 className="text-4xl md:text-5xl font-bold mb-8 leading-tight">
-                    Hello, I'm Arijit Debnath
+                    Hello, I'm Arijitt Debnath
                 </h1>
 
                 <div className="prose prose-lg max-w-none">
